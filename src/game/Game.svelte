@@ -35,6 +35,7 @@
 		} else if (keyPressed === "ENTER" && rows[currentRowValue].length === 5) {
 			if (rows[currentRowValue] === correctWordValue) {
 				gameOver = true;
+				currentRow.update(n => n + 1);
 				showGameOverScreen("🎉 You win!🍾");
 			} else if (currentRowValue === 5) {
 				gameOver = true;
