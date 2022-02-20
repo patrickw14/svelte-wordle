@@ -1,4 +1,5 @@
 <script>
+    import BoardTile from './BoardTile.svelte';
     import { correctWord, currentRow } from '../stores';
     export let row;
     export let rowIndex;
@@ -10,11 +11,29 @@
     currentRow.subscribe(value => currentRowValue = value);
 
     $: letterArr = row.padEnd(5, ' ').split('');
+
+    $: tileStates = letterArr.map((letter, index) => {
+        if (currentRowValue <= rowIndex) {
+            return "empty";
+        }
+
+        if (correctWordArr[index] === letter) {
+            return "correct";
+        }
+
+        //TODO: This is an oversimplification. Need to support multiple instances
+        //of the same letter in the word.
+        if (correctWordArr.includes(letter)) {
+            return "present";
+        }
+
+        return "absent";
+    });
 </script>
 
 <div class="row">
-    {#each letterArr as letter}
-        <div class="tile">{letter}</div>    
+    {#each letterArr as letter, i}
+        <BoardTile letter={letter} state={tileStates[i]} />
     {/each}
 </div>
 
@@ -25,21 +44,5 @@
         grid-gap: 5px;
         height: 5em;
         margin-bottom: 5px;
-    }
-
-    .tile {
-        border: 2px solid #d3d6da;
-        width: 3em;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2em;
-        line-height: 2rem;
-        font-weight: bold;
-        vertical-align: middle;
-        box-sizing: border-box;
-        color: black;
-        text-transform: uppercase;
-        user-select: none;
     }
 </style>

@@ -1,11 +1,14 @@
 <script>
 	import Game from './game/Game.svelte';
+	import Modal from 'svelte-simple-modal';
 </script>
 
 <header>Patrick's Wordle</header>
 
 <main>
-	<Game />
+	<Modal>
+		<Game />
+	</Modal>
 </main>
 
 <style>
