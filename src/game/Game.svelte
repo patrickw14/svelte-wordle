@@ -15,29 +15,19 @@
 
 	let rows = ["", "", "", "", "", ""];
 
-	let currentRowValue;
-	currentRow.subscribe(value => {
-		currentRowValue = value;
-	})
-
-	let correctWordValue;
-	correctWord.subscribe(value => {
-		correctWordValue = value;
-	})
-
 	function handleKey(keyPressed) {
 		if (gameOver) return;
 
-		if (isLetter(keyPressed) && rows[currentRowValue].length < 5) {
-			rows[currentRowValue] = rows[currentRowValue] + keyPressed;
-		} else if (keyPressed === "BACKSPACE" && rows[currentRowValue].length > 0) {
-			rows[currentRowValue] = rows[currentRowValue].slice(0, -1);
-		} else if (keyPressed === "ENTER" && rows[currentRowValue].length === 5) {
-			if (rows[currentRowValue] === correctWordValue) {
+		if (isLetter(keyPressed) && rows[$currentRow].length < 5) {
+			rows[$currentRow] = rows[$currentRow] + keyPressed;
+		} else if (keyPressed === "BACKSPACE" && rows[$currentRow].length > 0) {
+			rows[$currentRow] = rows[$currentRow].slice(0, -1);
+		} else if (keyPressed === "ENTER" && rows[$currentRow].length === 5) {
+			if (rows[$currentRow] === $correctWord) {
 				gameOver = true;
 				currentRow.update(n => n + 1);
 				showGameOverScreen("🎉 You win!🍾");
-			} else if (currentRowValue === 5) {
+			} else if ($currentRow === 5) {
 				gameOver = true;
 				currentRow.update(n => n + 1);
 				showGameOverScreen("Better luck next time")

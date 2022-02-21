@@ -4,16 +4,12 @@
 	export let row;
 	export let rowIndex;
 
-	let correctWordArr;
-	correctWord.subscribe(val => correctWordArr = val.split(""));
-
-	let currentRowValue;
-	currentRow.subscribe(value => currentRowValue = value);
+	let correctWordArr = $correctWord.split("");
 
 	$: letterArr = row.padEnd(5, ' ').split('');
 
 	$: tileStates = letterArr.map((letter, index) => {
-		if (currentRowValue <= rowIndex) {
+		if ($currentRow <= rowIndex) {
 			return "empty";
 		}
 
@@ -33,7 +29,7 @@
 
 <div class="row">
 	{#each letterArr as letter, i}
-		<BoardTile letter={letter} state={tileStates[i]} />
+		<BoardTile letter={letter} state={tileStates[i]} characterIndex={i} />
 	{/each}
 </div>
 

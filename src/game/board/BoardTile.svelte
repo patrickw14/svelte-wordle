@@ -1,9 +1,45 @@
 <script>
 	export let letter;
 	export let state; //empty, correct, present, absent
+	export let characterIndex = 0;
+
+	let prevLetter;
+	let prevState;
+	let animationState = "idle";
+
+	let classState = state;
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	$: {
+		if (prevLetter === " " && letter !== " ") {
+			animationState = "pop";
+			setTimeout(() => animationState = "idle", 100);
+		}
+
+		if (prevState === 'empty' && state !== 'empty') {
+			sleep(250 * characterIndex)
+				.then(() => {
+					animationState = "flip-in";
+					return sleep(250);
+				})
+				.then(() => {
+					classState = state;
+					animationState = "flip-out";
+					return sleep(250);
+				})
+				.then(() => {
+					animationState = "idle";
+				});
+		}
+		prevState = state;
+		prevLetter = letter;
+	}
 </script>
 
-<div class={`tile ${state}`}>{letter}</div>
+<div data-animation={animationState} class={`tile ${classState}`}>{letter}</div>
 
 <style>
 	.tile {
@@ -19,6 +55,55 @@
 		color: #fff;
 		text-transform: uppercase;
 		user-select: none;
+	}
+
+	.tile[data-animation='pop'] {
+		animation-name: PopIn;
+		animation-duration: 100ms;
+	}
+
+	@keyframes PopIn {
+		from {
+			transform: scale(0.8);
+			opacity: 0;
+		}
+
+		40% {
+			transform: scale(1.1);
+			opacity: 1;
+		}
+	}
+
+	.tile[data-animation='flip-in'] {
+		animation-name: FlipIn;
+		animation-duration: 250ms;
+		animation-timing-function: ease-in;
+	}
+
+	@keyframes FlipIn {
+		0% {
+			transform: rotateX(0);
+		}
+
+		100% {
+			transform: rotateX(-90deg);
+		}
+	}
+
+	.tile[data-animation='flip-out'] {
+		animation-name: FlipOut;
+		animation-duration: 250ms;
+		animation-timing-function: ease-in;
+	}
+
+	@keyframes FlipOut {
+		0% {
+			transform: rotateX(-90deg);
+		}
+
+		100% {
+			transform: rotateX(0);
+		}
 	}
 
 	.empty {
