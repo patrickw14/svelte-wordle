@@ -52,11 +52,11 @@
 			if (guess === $correctWord) {
 				gameOver = true;
 				currentRow.update(n => n + 1);
-				showGameOverScreen("🎉 You win!🍾");
+				setTimeout(() => showGameOverScreen("🎉 You win!🍾"), 2000);
 			} else if ($currentRow === 5) {
 				gameOver = true;
 				currentRow.update(n => n + 1);
-				showGameOverScreen("Better luck next time")
+				setTimeout(() => showGameOverScreen("Better luck next time"), 2000);
 			} else {
 				currentRow.update(n => n + 1);
 			}
