@@ -7,9 +7,9 @@
 	export let keysUsed;
 
 	const keys = [
-		["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-		["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-		["Z", "X", "C", "V", "B", "N", "M"]
+		["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+		["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+		["z", "x", "c", "v", "b", "n", "m"]
 	];
 
 	function handleKey(key) {
@@ -22,20 +22,20 @@
 <div class="keyboard">
 	<div class="row">
 		{#each keys[0] as keyLetter}
-			<Key on:click={e => handleKey(e.detail.toLowerCase())} letter={keyLetter} state={keysUsed[keyLetter]} />
+			<Key on:click={e => handleKey(e.detail)} letter={keyLetter} state={keysUsed[keyLetter]} />
 		{/each}
 	</div>
 	<div class="row">
 		<div class="space"></div>
 		{#each keys[1] as keyLetter}
-			<Key on:click={e => handleKey(e.detail.toLowerCase())} letter={keyLetter} state={keysUsed[keyLetter]} />
+			<Key on:click={e => handleKey(e.detail)} letter={keyLetter} state={keysUsed[keyLetter]} />
 		{/each}
 		<div class="space"></div>
 	</div>
 	<div class="row">
 		<Key on:click={e => handleKey("Enter")} letter={"ENTER"} />
 		{#each keys[2] as keyLetter}
-			<Key on:click={e => handleKey(e.detail.toLowerCase())} letter={keyLetter} state={keysUsed[keyLetter]} />
+			<Key on:click={e => handleKey(e.detail)} letter={keyLetter} state={keysUsed[keyLetter]} />
 		{/each}
 		<Key on:click={e => handleKey("Backspace")} letter={"DEL"} />
 	</div>
