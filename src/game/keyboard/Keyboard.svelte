@@ -13,7 +13,7 @@
 	];
 
 	function handleKey(key) {
-		dispatch("key", key.toUpperCase());
+		dispatch("key", key);
 	}
 </script>
 
@@ -22,22 +22,22 @@
 <div class="keyboard">
 	<div class="row">
 		{#each keys[0] as keyLetter}
-			<Key on:click={e => handleKey(e.detail)} letter={keyLetter} state={keysUsed[keyLetter]} />
+			<Key on:click={e => handleKey(e.detail.toLowerCase())} letter={keyLetter} state={keysUsed[keyLetter]} />
 		{/each}
 	</div>
 	<div class="row">
 		<div class="space"></div>
 		{#each keys[1] as keyLetter}
-			<Key on:click={e => handleKey(e.detail)} letter={keyLetter} state={keysUsed[keyLetter]} />
+			<Key on:click={e => handleKey(e.detail.toLowerCase())} letter={keyLetter} state={keysUsed[keyLetter]} />
 		{/each}
 		<div class="space"></div>
 	</div>
 	<div class="row">
-		<Key on:click={e => handleKey("ENTER")} letter={"ENTER"} />
+		<Key on:click={e => handleKey("Enter")} letter={"ENTER"} />
 		{#each keys[2] as keyLetter}
-			<Key on:click={e => handleKey(e.detail)} letter={keyLetter} state={keysUsed[keyLetter]} />
+			<Key on:click={e => handleKey(e.detail.toLowerCase())} letter={keyLetter} state={keysUsed[keyLetter]} />
 		{/each}
-		<Key on:click={e => handleKey("BACKSPACE")} letter={"DEL"} />
+		<Key on:click={e => handleKey("Backspace")} letter={"DEL"} />
 	</div>
 </div>
 

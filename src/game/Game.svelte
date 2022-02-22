@@ -5,7 +5,7 @@
 	import Board from './board/Board.svelte';
 	import Keyboard from './keyboard/Keyboard.svelte';
 	import Popup from './Popup.svelte';
-	import { currentRow, correctWord } from './stores.js';
+	import { currentRow, correctWord, validGuesses } from './stores.js';
 
 	const { open } = getContext('simple-modal');
 
@@ -34,22 +34,27 @@
 	}
 
 	function handleKey(keyPressed) {
+		console.log("KEY PRESSED", keyPressed);
 		if (gameOver) return;
 
 		if (isLetter(keyPressed) && rows[$currentRow].length < 5) {
 			rows[$currentRow] = rows[$currentRow] + keyPressed;
-		} else if (keyPressed === "BACKSPACE" && rows[$currentRow].length > 0) {
+		} else if (keyPressed === "Backspace" && rows[$currentRow].length > 0) {
 			rows[$currentRow] = rows[$currentRow].slice(0, -1);
-		} else if (keyPressed === "ENTER") {
+		} else if (keyPressed === "Enter") {
 			if (rows[$currentRow].length !== 5) {
 				gameBoard.shakeRow($currentRow);
 				return;
 			}
 
 			const guess = rows[$currentRow];
+			if (!$validGuesses.includes(guess.toLowerCase())) {
+				gameBoard.shakeRow($currentRow);
+				return;
+			}
 			updateKeysUsed(guess);
 
-			if (guess === $correctWord) {
+			if (guess.toLowerCase() === $correctWord) {
 				gameOver = true;
 				currentRow.update(n => n + 1);
 				setTimeout(() => showGameOverScreen("🎉 You win!🍾"), 2000);
