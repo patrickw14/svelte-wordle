@@ -34,7 +34,6 @@
 	}
 
 	function handleKey(keyPressed) {
-		console.log("KEY PRESSED", keyPressed);
 		if (gameOver) return;
 
 		if (isLetter(keyPressed) && rows[$currentRow].length < 5) {

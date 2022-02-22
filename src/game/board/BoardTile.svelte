@@ -21,7 +21,11 @@
 	$: {
 		if (prevLetter === " " && letter !== " ") {
 			animationState = "pop";
-			setTimeout(() => animationState = "idle", 100);
+			setTimeout(() => {
+				// if another animation is going on, don't interrupt it
+				if (animationState === "pop")
+					animationState = "idle";
+			}, 100);
 		}
 
 		// I have no idea if it's safe to do stuff like this in Svelte reactive blocks...
