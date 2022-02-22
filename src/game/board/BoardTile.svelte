@@ -24,16 +24,17 @@
 			setTimeout(() => animationState = "idle", 100);
 		}
 
+		// I have no idea if it's safe to do stuff like this in Svelte reactive blocks...
 		if (prevState === 'empty' && state !== 'empty') {
-			sleep(250 * characterIndex)
+			sleep(150 * characterIndex)
 				.then(() => {
 					animationState = "flip-in";
-					return sleep(250);
+					return sleep(500);
 				})
 				.then(() => {
 					classState = state;
 					animationState = "flip-out";
-					return sleep(250);
+					return sleep(500);
 				})
 				.then(() => {
 					animationState = "idle";
@@ -81,33 +82,33 @@
 
 	.tile[data-animation='flip-in'] {
 		animation-name: FlipIn;
-		animation-duration: 250ms;
+		animation-duration: 500ms;
 		animation-timing-function: ease-in;
 	}
 
 	@keyframes FlipIn {
 		0% {
-			transform: rotateX(0);
+			transform: rotateY(0);
 		}
 
 		100% {
-			transform: rotateX(-90deg);
+			transform: rotateY(90deg);
 		}
 	}
 
 	.tile[data-animation='flip-out'] {
 		animation-name: FlipOut;
-		animation-duration: 250ms;
+		animation-duration: 500ms;
 		animation-timing-function: ease-in;
 	}
 
 	@keyframes FlipOut {
 		0% {
-			transform: rotateX(-90deg);
+			transform: rotateY(90deg);
 		}
 
 		100% {
-			transform: rotateX(0);
+			transform: rotateY(0);
 		}
 	}
 
