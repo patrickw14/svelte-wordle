@@ -44,7 +44,7 @@
 <style>
 	.keyboard {
 		height: 200px;
-		margin-top: 80px;
+		margin-top: 1em;
 	}
 
 	.row {

@@ -82,7 +82,7 @@
 		width: 100%;
 		max-width: 500px;
 		height: calc(100% - 40px);
-		margin: 5em auto;
+		margin: 1em auto;
 		display: flex;
 		flex-direction: column;
 	}

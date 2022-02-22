@@ -81,8 +81,6 @@ const answers = [
 	'maxim',
 	'linen',
 	'unmet',
-	'flesh',
-	'booby',
 	'forth',
 	'first',
 	'stand',
