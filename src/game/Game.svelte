@@ -11,10 +11,27 @@
 
 	let gameOver = false;
 	let gameBoard;
+	let keysUsed = {};
 
 	const showGameOverScreen = (message) => open(Popup, { message});
 
 	let rows = ["", "", "", "", "", ""];
+
+	function updateKeysUsed(guess) {
+		guess.split("").forEach((l, i) => {
+			if (!$correctWord.includes(l)) {
+				keysUsed[l] = "absent";
+			}
+
+			if ($correctWord.charAt(i) === l) {
+				keysUsed[l] = "correct";
+			}
+
+			if (!keysUsed[l]) {
+				keysUsed[l] = "present";
+			}
+		})
+	}
 
 	function handleKey(keyPressed) {
 		if (gameOver) return;
@@ -28,7 +45,11 @@
 				gameBoard.shakeRow($currentRow);
 				return;
 			}
-			if (rows[$currentRow] === $correctWord) {
+
+			const guess = rows[$currentRow];
+			updateKeysUsed(guess);
+
+			if (guess === $correctWord) {
 				gameOver = true;
 				currentRow.update(n => n + 1);
 				showGameOverScreen("🎉 You win!🍾");
@@ -47,11 +68,9 @@
 	}
 </script>
 
-<svelte:window on:keydown={(e) => handleKey(e.key.toUpperCase())} />
-
 <div class="game">
 	<Board bind:this={gameBoard} rows={rows} />
-	<Keyboard />
+	<Keyboard on:key={(e) => handleKey(e.detail)} keysUsed={keysUsed} />
 </div>
 
 <style>
