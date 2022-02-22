@@ -3,6 +3,11 @@
 	import { correctWord, currentRow } from '../stores';
 	export let row;
 	export let rowIndex;
+	export function shake() {
+		tiles.forEach(tile => tile.shake());
+	}
+
+	let tiles = [];
 
 	let correctWordArr = $correctWord.split("");
 
@@ -29,7 +34,7 @@
 
 <div class="row">
 	{#each letterArr as letter, i}
-		<BoardTile letter={letter} state={tileStates[i]} characterIndex={i} />
+		<BoardTile bind:this={tiles[i]} letter={letter} state={tileStates[i]} characterIndex={i} />
 	{/each}
 </div>
 

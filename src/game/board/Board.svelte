@@ -2,12 +2,17 @@
 	import BoardRow from './BoardRow.svelte';
 
 	export let rows;
+	export function shakeRow(rowNumber) {
+		boardRows[rowNumber].shake();
+	}
+
+	let boardRows = [];
 </script>
 
 <div class="board-container">
 	<div class="board">
 		{#each rows as row, i}
-			<BoardRow row={row} rowIndex={i} />
+			<BoardRow bind:this={boardRows[i]} row={row} rowIndex={i} />
 		{/each}
 	</div>
 </div>

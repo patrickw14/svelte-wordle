@@ -10,6 +10,7 @@
 	const { open } = getContext('simple-modal');
 
 	let gameOver = false;
+	let gameBoard;
 
 	const showGameOverScreen = (message) => open(Popup, { message});
 
@@ -22,7 +23,11 @@
 			rows[$currentRow] = rows[$currentRow] + keyPressed;
 		} else if (keyPressed === "BACKSPACE" && rows[$currentRow].length > 0) {
 			rows[$currentRow] = rows[$currentRow].slice(0, -1);
-		} else if (keyPressed === "ENTER" && rows[$currentRow].length === 5) {
+		} else if (keyPressed === "ENTER") {
+			if (rows[$currentRow].length !== 5) {
+				gameBoard.shakeRow($currentRow);
+				return;
+			}
 			if (rows[$currentRow] === $correctWord) {
 				gameOver = true;
 				currentRow.update(n => n + 1);
@@ -45,7 +50,7 @@
 <svelte:window on:keydown={(e) => handleKey(e.key.toUpperCase())} />
 
 <div class="game">
-	<Board rows={rows} />
+	<Board bind:this={gameBoard} rows={rows} />
 	<Keyboard />
 </div>
 

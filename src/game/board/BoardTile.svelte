@@ -2,6 +2,11 @@
 	export let letter;
 	export let state; //empty, correct, present, absent
 	export let characterIndex = 0;
+	export async function shake() {
+		animationState = "shake";
+		await sleep(1000);
+		animationState = "idle";
+	}
 
 	let prevLetter;
 	let prevState;
@@ -103,6 +108,54 @@
 
 		100% {
 			transform: rotateX(0);
+		}
+	}
+
+	.tile[data-animation='shake'] {
+		animation-name: Shake;
+		animation-duration: 1000ms;
+		animation-timing-function: ease-in;
+	}
+
+	@keyframes Shake {
+		10% {
+			transform: translateX(-2px);
+		}
+
+		20% {
+			transform: translateX(2px);
+		}
+
+		30% {
+			transform: translateX(-3px);
+		}
+
+		40% {
+			transform: translateX(3px);
+		}
+
+		50% {
+			transform: translateX(-4px);
+		}
+
+		60% {
+			transform: translateX(4px);
+		}
+
+		70% {
+			transform: translateX(-3px);
+		}
+
+		80% {
+			transform: translateX(3px);
+		}
+
+		90% {
+			transform: translateX(-2px);
+		}
+
+		100% {
+			transform: translateX(0);
 		}
 	}
 
